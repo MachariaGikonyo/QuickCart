@@ -6,7 +6,7 @@ import User from "@/models/User";
 export const inngest = new Inngest ({id: 'quickcart-next'});
 
 
-export const syncUserCreation = innjest.createFunction(
+export const syncUserCreation = inngest.createFunction(
     {
         id: 'sync-user-from-clerk'
     },
