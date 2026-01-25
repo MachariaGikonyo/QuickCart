@@ -1,6 +1,7 @@
 import { Inngest } from "inngest";
-import connectDB from "./db";
+import connectDB from "@/config/db";
 import User from "@/models/User";
+import Order from "@/models/Order";
 
 
 
@@ -71,7 +72,8 @@ export const createUserOrder = inngest.createFunction(
     },
     {event: 'order/created'},
     async ({events}) => {
-        
+
+        await connectDB()
         const orders = events.map((event)=> {
             return {
                 userId: event.data.userId,
@@ -81,11 +83,12 @@ export const createUserOrder = inngest.createFunction(
                 date : event.data.date
             }
         })
-
         await connectDB()
+
         await Order.insertMany(orders)
 
         return { success: true, processed: orders.length };
+ 
 
     }
 )
